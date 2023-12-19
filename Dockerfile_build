@@ -1,0 +1,10 @@
+# 选择镜像
+FROM maven:3.9.5-eclipse-temurin-8-focal AS builder
+# 复制源码到镜像
+COPY . /usr/src/mymaven
+# 设置工作目录
+WORKDIR /usr/src/mymaven
+# 构建
+RUN mvn -B -D maven.test.skip clean package
+# 取出jar包
+COPY --from=builder /usr/src/mymaven/target/weshare-0.0.2.jar /home/gitlab-runner/product.d/weshare-0.0.2.jar
