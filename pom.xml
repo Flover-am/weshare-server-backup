@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.web</groupId>
-    <artifactId>springboot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>weshare</artifactId>
+    <version>0.0.2</version>
     <name>springboot</name>
     <description>springboot</description>
     <properties>
