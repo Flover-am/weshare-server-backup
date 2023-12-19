@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Blob;
+import java.util.List;
 
 /**
  * 课程实体类
@@ -24,6 +25,9 @@ public class Course {
     private String department;
     @Column(name = "picture", columnDefinition = "mediumblob")
     private byte[] picture;
+    @ManyToMany
+    @JoinTable(name = "likes", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private List<User> userList;
 
     /**
      * @return 将对象所有信息以String方式返回

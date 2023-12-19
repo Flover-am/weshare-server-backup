@@ -1,24 +1,32 @@
 package com.web.springboot.controller;
 
 import com.web.springboot.entity.Course;
+import com.web.springboot.entity.Po.CourseWithLike;
+import com.web.springboot.entity.User;
+import com.web.springboot.entity.likes;
 import com.web.springboot.repository.CourseRepository;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
+import com.web.springboot.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.web.springboot.repository.likesRepository;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/course")
 public class CourseHandler {
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private likesRepository likesRepository;
     private final Logger logger = LoggerFactory.getLogger(CourseHandler.class);
 
     /**
@@ -33,6 +41,32 @@ public class CourseHandler {
         return courseRepository.findAll();
     }
 
+    @GetMapping("/findAll/{id}")
+    public List<CourseWithLike> findAllById(@PathVariable Integer id) {
+
+
+        Optional<User> a = userRepository.findById(id);
+        if (a.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            List<Course> oriCourse = courseRepository.findAll();
+            List<Course> likeCourse = a.get().getCourseList();
+
+            List<CourseWithLike> result = oriCourse.stream().map(course -> {
+                for (Course c :
+                        likeCourse) {
+                    if (c.getId().equals(course.getId())) {
+                        return CourseWithLike.covert(course, true);
+                    }
+                }
+                return CourseWithLike.covert(course, false);
+            }).toList();
+            return result;
+        }
+
+
+    }
+
     @GetMapping("/findAllName")
     public List<Course> findAllName() {
         List<Course> get = courseRepository.findAll();
@@ -43,6 +77,64 @@ public class CourseHandler {
         }
 
         return get;
+    }
+
+    /**
+     * 添加用户和课程是否为喜欢的关系到likes，如果已经存在则不变
+     */
+    @GetMapping("/addToLike/{userId}/{courseId}")
+    public String addToLike(@PathVariable Integer courseId, @PathVariable Integer userId) {
+
+        // 检测用户是否存在
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            return "user_not_exist";
+        }
+        // 检测课程是否存在
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (course.isEmpty()) {
+            return "course_not_exist";
+        }
+        List<likes> exist = likesRepository.findByCourseIdAndUserId(courseId, userId);
+        if (exist == null || exist.isEmpty()) {
+            likes newLike = new likes();
+            newLike.setUser_id(userId);
+            newLike.setCourse_id(courseId);
+            likes res = likesRepository.save(newLike);
+            if (res == null) {
+                return "fail";
+            }
+            return "success";
+
+        } else {
+            return "already_liked";
+        }
+    }
+
+    /**
+     * 添加用户和课程是否为喜欢的关系到likes，如果已经存在则不变
+     */
+    @GetMapping("/removeFromLike/{userId}/{courseId}")
+    public String removeFromLike(@PathVariable Integer courseId, @PathVariable Integer userId) {
+
+        // 检测用户是否存在
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            return "user_not_exist";
+        }
+        // 检测课程是否存在
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (course.isEmpty()) {
+            return "course_not_exist";
+        }
+        List<likes> exist = likesRepository.findByCourseIdAndUserId(courseId, userId);
+        if (!exist.isEmpty()) {
+            likesRepository.delete(exist.get(0));
+            return "success";
+
+        } else {
+            return "not_liked";
+        }
     }
 
 

@@ -2,15 +2,17 @@ package com.web.springboot.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * 用户实体类
  */
+
 @Entity
 @Data
 public class User {
@@ -21,6 +23,9 @@ public class User {
     private String password;
     private String picture;
     private Integer contribution;
+    @ManyToMany
+    @JoinTable(name = "likes",joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "course_id",referencedColumnName = "id"))
+    private List<Course> courseList;
 
     /**
      * @return 将对象所有信息以String方式返回
