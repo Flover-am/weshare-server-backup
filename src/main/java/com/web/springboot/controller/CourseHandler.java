@@ -37,12 +37,12 @@ public class CourseHandler {
      * @return 装有所有课程信息的列表
      */
     @GetMapping("/findAll")
-    public List<Course> findAll() {
-        return courseRepository.findAll();
+    public List<CourseWithLike> findAll() {
+        return courseRepository.findAll().stream().map(course -> CourseWithLike.covert(course, false)).toList();
     }
 
     @GetMapping("/findAll/{id}")
-    public List<CourseWithLike> findAllById(@PathVariable Integer id) {
+    public List<CourseWithLike> findAllByUserId(@PathVariable Integer id) {
 
 
         Optional<User> a = userRepository.findById(id);
@@ -68,7 +68,7 @@ public class CourseHandler {
     }
 
     @GetMapping("/findAllName")
-    public List<Course> findAllName() {
+    public List<CourseWithLike> findAllName() {
         List<Course> get = courseRepository.findAll();
 
         for (Course c :
