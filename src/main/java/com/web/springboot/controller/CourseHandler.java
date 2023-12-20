@@ -82,12 +82,12 @@ public class CourseHandler {
     /**
      * 添加用户和课程是否为喜欢的关系到likes，如果已经存在则不变
      */
-    @GetMapping("/addToLike/{userId}/{courseId}")
-    public String addToLike(@PathVariable Integer courseId, @PathVariable Integer userId) {
+    @GetMapping("/addToLike/{userName}/{courseId}")
+    public String addToLike(@PathVariable Integer courseId, @PathVariable String userName) {
 
         // 检测用户是否存在
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
+        User user = userRepository.findByUsername(userName);
+        if (user == null) {
             return "user_not_exist";
         }
         // 检测课程是否存在
@@ -95,6 +95,7 @@ public class CourseHandler {
         if (course.isEmpty()) {
             return "course_not_exist";
         }
+        Integer userId = user.getId();
         List<likes> exist = likesRepository.findByCourseIdAndUserId(courseId, userId);
         if (exist == null || exist.isEmpty()) {
             likes newLike = new likes();
@@ -114,12 +115,12 @@ public class CourseHandler {
     /**
      * 添加用户和课程是否为喜欢的关系到likes，如果已经存在则不变
      */
-    @GetMapping("/removeFromLike/{userId}/{courseId}")
-    public String removeFromLike(@PathVariable Integer courseId, @PathVariable Integer userId) {
+    @GetMapping("/removeFromLike/{userName}/{courseId}")
+    public String removeFromLike(@PathVariable Integer courseId, @PathVariable String userName) {
 
         // 检测用户是否存在
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
+        User user = userRepository.findByUsername(userName);
+        if (user == null) {
             return "user_not_exist";
         }
         // 检测课程是否存在
@@ -127,6 +128,7 @@ public class CourseHandler {
         if (course.isEmpty()) {
             return "course_not_exist";
         }
+        Integer userId = user.getId();
         List<likes> exist = likesRepository.findByCourseIdAndUserId(courseId, userId);
         if (!exist.isEmpty()) {
             likesRepository.delete(exist.get(0));
