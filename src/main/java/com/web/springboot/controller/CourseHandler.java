@@ -41,16 +41,16 @@ public class CourseHandler {
         return courseRepository.findAll().stream().map(course -> CourseWithLike.covert(course, false)).toList();
     }
 
-    @GetMapping("/findAll/{id}")
-    public List<CourseWithLike> findAllByUserId(@PathVariable Integer id) {
+    @GetMapping("/findAll/{userName}")
+    public List<CourseWithLike> findAllByUserName(@PathVariable String userName) {
 
 
-        Optional<User> a = userRepository.findById(id);
-        if (a.isEmpty()) {
+        var a = userRepository.findByUsername(userName);
+        if (a == null) {
             return new ArrayList<>();
         } else {
             List<Course> oriCourse = courseRepository.findAll();
-            List<Course> likeCourse = a.get().getCourseList();
+            List<Course> likeCourse = a.getCourseList();
 
             List<CourseWithLike> result = oriCourse.stream().map(course -> {
                 for (Course c :
@@ -76,7 +76,7 @@ public class CourseHandler {
             c.setPicture(new byte[1]);
         }
 
-        return get;
+        return get.stream().map(course -> CourseWithLike.covert(course, false)).toList();
     }
 
     /**
