@@ -29,6 +29,7 @@ build-job:       # This job runs in the build stage, which runs first.
   script:
     - echo "Compiling the code..."
     - echo "building....."
+    - whoami
     - mvn -B -D maven.test.skip clean package
     - echo "Compile complete."
 
