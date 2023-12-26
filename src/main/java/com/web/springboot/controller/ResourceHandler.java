@@ -176,7 +176,13 @@ public class ResourceHandler {
         logger.info("传入数据：" + request);
         MultipartHttpServletRequest multipartRequest =
                 WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class);
-        MultipartFile file = multipartRequest.getFile("file");
+        MultipartFile file = null;
+        if (multipartRequest != null) {
+            file = multipartRequest.getFile("file");
+        }else {
+            logger.info("文件为空");
+            return "empty_file";
+        }
         if (type.equals("文件")) {
             logger.info("资源类型：文件");
             if (file.isEmpty()) {
