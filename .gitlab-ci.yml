@@ -31,6 +31,8 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "building....."
     - source /home/runner2/.bashrc
     - whoami
+    - pwd
+    - echo $MAVEN_HOME
     - mvn -B -D maven.test.skip clean package
     - echo "Compile complete."
 
