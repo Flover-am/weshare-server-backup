@@ -30,9 +30,9 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "Compiling the code..."
     - echo "building....."
     - source /home/runner2/.bashrc
-    - whoami
-    - pwd
-    - echo $MAVEN_HOME
+    - tree /lib/maven
+    - export MAVEN_HOME=/lib/maven/apache-maven-3.9.6
+    - export PATH=${MAVEN_HOME}/bin:${PATH}
     - mvn -B -D maven.test.skip clean package
     - echo "Compile complete."
 
