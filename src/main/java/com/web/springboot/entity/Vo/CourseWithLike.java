@@ -1,16 +1,10 @@
-package com.web.springboot.entity.Po;
+package com.web.springboot.entity.Vo;
 
 import com.web.springboot.entity.Course;
-import com.web.springboot.entity.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

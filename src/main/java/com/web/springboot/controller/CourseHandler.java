@@ -1,7 +1,7 @@
 package com.web.springboot.controller;
 
 import com.web.springboot.entity.Course;
-import com.web.springboot.entity.Po.CourseWithLike;
+import com.web.springboot.entity.Vo.CourseWithLike;
 import com.web.springboot.entity.User;
 import com.web.springboot.entity.likes;
 import com.web.springboot.repository.CourseRepository;
