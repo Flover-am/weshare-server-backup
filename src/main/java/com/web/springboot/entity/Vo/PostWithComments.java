@@ -13,7 +13,7 @@ public class PostWithComments {
     private Long id;
     private String authorName;
     private String title;
-    private Integer type;
+    private String type;
     private String content;
     private List<CommentVo> commentsVo;
 

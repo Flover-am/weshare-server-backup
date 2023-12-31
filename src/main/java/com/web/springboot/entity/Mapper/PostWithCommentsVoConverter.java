@@ -21,6 +21,19 @@ public class PostWithCommentsVoConverter {
     public PostWithCommentsVoConverter(UserRepository userRepository) {
         PostWithCommentsVoConverter.userRepository = userRepository;
     }
+    /*type = 1,2,3 转换成 技术，资源，闲聊*/
+    static String Type(Integer type) {
+        switch (type) {
+            case 1:
+                return "技术";
+            case 2:
+                return "资源";
+            case 3:
+                return "闲聊";
+            default:
+                return "未知";
+        }
+    }
 
     public static PostWithComments convert(Post post, List<Comment> comments) {
         String userName = userRepository.findById(post.getAuthorId()).map(User::getUsername).orElse("无名氏？");
@@ -28,7 +41,8 @@ public class PostWithCommentsVoConverter {
                 .id(post.getId())
                 .authorName(userName)
                 .title(post.getTitle())
-                .type(post.getType())
+                /*type = 1,2,3 对应着技术，资源，闲聊*/
+                .type(Type(post.getType()))
                 .content(post.getContent())
                 .commentsVo(comments.stream().map(CommentVoConverter::convert).collect(Collectors.toList()))
                 .build();
