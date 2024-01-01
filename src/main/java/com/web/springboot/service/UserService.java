@@ -14,7 +14,7 @@ public class UserService {
     }
 
     // 判断用户是否存在
-    public boolean isUserExist(Integer id) {
-        return userDao.existsById(id);
+    public boolean isUserExist(String userName) {
+        return userDao.existsByUsername(userName);
     }
 }

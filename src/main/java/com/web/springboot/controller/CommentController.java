@@ -1,6 +1,7 @@
 package com.web.springboot.controller;
 
 import com.web.springboot.entity.Comment;
+import com.web.springboot.entity.Mapper.CommentConverter;
 import com.web.springboot.entity.Mapper.CommentVoConverter;
 import com.web.springboot.entity.Vo.CommentVo;
 import com.web.springboot.service.CommentService;
@@ -23,10 +24,10 @@ public class CommentController {
     }
 
     @PostMapping("/publish")
-    public ResponseEntity<CommentVo> addComment(@RequestBody Comment comment) {
-        if (!userService.isUserExist(comment.getAuthorId())) {
+    public ResponseEntity<CommentVo> addComment(@RequestBody CommentVo commentVo) {
+        if (!userService.isUserExist(commentVo.getAuthorName())) {
             return ResponseEntity.status(401).body(null);
         }
-        return ResponseEntity.ok(CommentVoConverter.convert(commentService.addComment(comment)));
+        return ResponseEntity.ok(CommentVoConverter.convert(commentService.addComment(CommentConverter.convert(commentVo))));
     }
 }

@@ -7,11 +7,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.web.springboot.entity.User;
+
+import java.time.format.DateTimeFormatter;
+
 @Mapper
 @Component
 public class PostVoConverter {
 
     private static UserRepository userRepository;
+
     @Autowired
     public PostVoConverter(UserRepository userRepository) {
         PostVoConverter.userRepository = userRepository;
@@ -25,6 +29,7 @@ public class PostVoConverter {
                 .title(post.getTitle())
                 .type(post.getType())
                 .content(post.getContent())
+                .time(post.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
     }
 

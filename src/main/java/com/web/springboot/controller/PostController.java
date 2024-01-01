@@ -1,5 +1,6 @@
 package com.web.springboot.controller;
 
+import com.web.springboot.entity.Mapper.PostConverter;
 import com.web.springboot.entity.Mapper.PostVoConverter;
 import com.web.springboot.entity.Post;
 import com.web.springboot.entity.Vo.PostVo;
@@ -31,12 +32,12 @@ public class PostController {
     }
 
     @PostMapping("/publish")
-    public ResponseEntity<PostVo> publish(@RequestBody Post post) {
-        if (post.getTitle().isEmpty() || post.getContent().isEmpty()) {
+    public ResponseEntity<PostVo> publish(@RequestBody PostVo postVo) {
+        if (postVo.getTitle().isEmpty() || postVo.getContent().isEmpty()) {
             return ResponseEntity.status(402).body(null);
-        } else if (!userService.isUserExist(post.getAuthorId())) {
+        } else if (!userService.isUserExist(postVo.getAuthorName())) {
             return ResponseEntity.status(401).body(null);
         }
-        return ResponseEntity.ok(PostVoConverter.convert(postService.addPost(post)));
+        return ResponseEntity.ok(PostVoConverter.convert(postService.addPost(PostConverter.convert(postVo))));
     }
 }
