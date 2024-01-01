@@ -23,8 +23,6 @@ public class Course {
     private Integer viewtimes;
     private String introduction;
     private String department;
-    @Column(name = "picture", columnDefinition = "mediumblob")
-    private byte[] picture;
 
     private String pictureUrl;
 

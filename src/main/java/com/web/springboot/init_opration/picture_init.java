@@ -20,28 +20,28 @@ public class picture_init {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    public void add_picture(String CourseName, String picture_path) {
-        Course course = courseRepository.findByCoursename(CourseName);
-
-        File file = new File(picture_path);
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
-            byte[] b = new byte[1000];
-            int n;
-            while ((n = fis.read(b)) != -1) {
-                bos.write(b, 0, n);
-            }
-            fis.close();
-            byte[] data = bos.toByteArray();
-            course.setPicture(data);
-            courseRepository.save(course);
-            bos.close();
-            return;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return;
-    }
+//    public void add_picture(String CourseName, String picture_path) {
+//        Course course = courseRepository.findByCoursename(CourseName);
+//
+//        File file = new File(picture_path);
+//        try {
+//            FileInputStream fis = new FileInputStream(file);
+//            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+//            byte[] b = new byte[1000];
+//            int n;
+//            while ((n = fis.read(b)) != -1) {
+//                bos.write(b, 0, n);
+//            }
+//            fis.close();
+//            byte[] data = bos.toByteArray();
+//            course.setPicture(data);
+//            courseRepository.save(course);
+//            bos.close();
+//            return;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return;
+//    }
 
 }

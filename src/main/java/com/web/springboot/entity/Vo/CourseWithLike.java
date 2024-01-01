@@ -16,11 +16,10 @@ public class CourseWithLike {
     private Integer viewtimes;
     private String introduction;
     private String department;
-    private byte[] picture;
     private Boolean isLiked;
     private String pictureUrl;
 
     static public CourseWithLike covert(Course course, Boolean isLiked) {
-        return new CourseWithLike(course.getId(), course.getCoursename(), course.getTeachername(), course.getStudytime(), course.getViewtimes(), course.getIntroduction(), course.getDepartment(), course.getPicture(), isLiked, course.getPictureUrl());
+        return new CourseWithLike(course.getId(), course.getCoursename(), course.getTeachername(), course.getStudytime(), course.getViewtimes(), course.getIntroduction(), course.getDepartment(), isLiked, course.getPictureUrl());
     }
 }

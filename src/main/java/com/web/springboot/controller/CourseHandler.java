@@ -71,11 +71,6 @@ public class CourseHandler {
     public List<CourseWithLike> findAllName() {
         List<Course> get = courseRepository.findAll();
 
-        for (Course c :
-                get) {
-            c.setPicture(new byte[1]);
-        }
-
         return get.stream().map(course -> CourseWithLike.covert(course, false)).toList();
     }
 
@@ -153,45 +148,45 @@ public class CourseHandler {
         return courseRepository.findByCoursenameLike("%" + name + "%");
     }
 
-    /**
-     * 根据课程名称获取课程的图片
-     * url："/getpicture/{coursename}"
-     *
-     * @param response：内存有图片的二进制流
-     * @param coursename          课程名称
-     * @return "coures_not_exist":课程不存在
-     * "fail":后端获取文件失败
-     * "success":获取成功
-     */
-    @GetMapping("/getpicture/{coursename}")
-    public String getPicture(HttpServletResponse response, @PathVariable("coursename") String coursename) {
-        Course course = courseRepository.findByCoursename(coursename);
-        if (course == null) {
-            logger.warn("请求了不存在课程的图片文件，请求课程名：" + coursename);
-            return "course_not_exist";
-        }
-        byte[] picture = course.getPicture();
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(picture);
-        response.reset();
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-Disposition", "attachment;coursename=" + coursename);
-
-        BufferedInputStream bis = new BufferedInputStream(byteArrayInputStream);
-        try {
-            byte[] buff = new byte[1024];
-            OutputStream os = response.getOutputStream();
-            int i;
-            while ((i = bis.read(buff)) != -1) {
-                os.write(buff, 0, i);
-                os.flush();
-            }
-        } catch (IOException e) {
-            logger.error("获取图片失败");
-            return "fail";
-        }
-        return "success";
-    }
+//    /**
+//     * 根据课程名称获取课程的图片
+//     * url："/getpicture/{coursename}"
+//     *
+//     * @param response：内存有图片的二进制流
+//     * @param coursename          课程名称
+//     * @return "coures_not_exist":课程不存在
+//     * "fail":后端获取文件失败
+//     * "success":获取成功
+//     */
+//    @GetMapping("/getpicture/{coursename}")
+//    public String getPicture(HttpServletResponse response, @PathVariable("coursename") String coursename) {
+//        Course course = courseRepository.findByCoursename(coursename);
+//        if (course == null) {
+//            logger.warn("请求了不存在课程的图片文件，请求课程名：" + coursename);
+//            return "course_not_exist";
+//        }
+//        byte[] picture = course.getPicture();
+//        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(picture);
+//        response.reset();
+//        response.setContentType("application/octet-stream");
+//        response.setCharacterEncoding("utf-8");
+//        response.setHeader("Content-Disposition", "attachment;coursename=" + coursename);
+//
+//        BufferedInputStream bis = new BufferedInputStream(byteArrayInputStream);
+//        try {
+//            byte[] buff = new byte[1024];
+//            OutputStream os = response.getOutputStream();
+//            int i;
+//            while ((i = bis.read(buff)) != -1) {
+//                os.write(buff, 0, i);
+//                os.flush();
+//            }
+//        } catch (IOException e) {
+//            logger.error("获取图片失败");
+//            return "fail";
+//        }
+//        return "success";
+//    }
 
     /**
      * 根据课程id查找课程名
