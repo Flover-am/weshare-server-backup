@@ -69,6 +69,7 @@ public class ResourceHandler {
     public List<Resource> findByCourseName(@PathVariable("coursename") String coursename) {
         Course course = courseRepository.findByCoursenameLike(coursename).get(0);
         course.setViewtimes(course.getViewtimes() + 1);
+        courseRepository.save(course);
         return resourceRepository.findByCourseid(course.getId());
     }
 
