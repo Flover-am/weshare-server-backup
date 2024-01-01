@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
+
 //将Comment转换为CommentVo
 @Mapper
 @Component
@@ -32,7 +34,8 @@ public class CommentVoConverter {
                 .authorName(userName)
                 .content(comment.getContent())
                 .postId(comment.getPostId())
-                .time(comment.getTime().toString())
+                .time(comment.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
+
     }
 }

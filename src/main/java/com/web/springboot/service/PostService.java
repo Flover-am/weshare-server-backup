@@ -42,13 +42,7 @@ public class PostService {
 
     }
 
-    public ResponseEntity<String> addPost(Post post) {
-        // 如果用户不存在(去数据库里面找)，返回错误
-        Integer authorId = post.getAuthorId();
-        if (userDao.findById(authorId).isEmpty() || userDao.findById(authorId) == null) {
-            return ResponseEntity.status(401).body("user_not_exist");
-        }
-        postDao.save(post);
-        return ResponseEntity.ok("success");
+    public Post addPost(Post post) {
+        return postDao.save(post);
     }
 }

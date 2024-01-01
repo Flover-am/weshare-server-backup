@@ -1,25 +1,28 @@
 package com.web.springboot.controller;
 
+import com.web.springboot.entity.Mapper.PostVoConverter;
 import com.web.springboot.entity.Post;
+import com.web.springboot.entity.Vo.PostVo;
 import com.web.springboot.entity.Vo.PostWithComments;
 import com.web.springboot.service.PostService;
+import com.web.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/post")
 public class PostController {
 
     private final PostService postService;
-
+    private final UserService userService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
 
     @GetMapping("/get_posts")
@@ -28,10 +31,12 @@ public class PostController {
     }
 
     @PostMapping("/publish")
-    public ResponseEntity<String> publish(@RequestBody Post post) {
+    public ResponseEntity<PostVo> publish(@RequestBody Post post) {
         if (post.getTitle().isEmpty() || post.getContent().isEmpty()) {
-            return ResponseEntity.status(402).body("标题或内容不能为空");
+            return ResponseEntity.status(402).body(null);
+        } else if (!userService.isUserExist(post.getAuthorId())) {
+            return ResponseEntity.status(401).body(null);
         }
-        return postService.addPost(post);
+        return ResponseEntity.ok(PostVoConverter.convert(postService.addPost(post)));
     }
 }

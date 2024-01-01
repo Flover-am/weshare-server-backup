@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 /**
@@ -22,17 +23,14 @@ public class Comment {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Integer id;
 
+    // 要传递的：作者id，帖子id，评论内容
     private Integer authorId;
+    private Integer postId;
     private String content;
 
-    private Integer postId;
 
+    // 评论时间自动生成
+    @CreationTimestamp
     private LocalDateTime time;
-    private Integer commentId;
-    public Comment(Integer postId,Integer authorId, String content){
-        this.authorId=authorId;
-        this.content=content;
-        this.postId=postId;
-        this.time=LocalDateTime.now();
-    }
+
 }
