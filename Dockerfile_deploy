@@ -1,5 +1,5 @@
 # 选择镜像
-FROM openjdk:17 
+FROM openjdk:17-alpine
 WORKDIR /home/jar
 COPY . /home/jar
 EXPOSE 9090/tcp
