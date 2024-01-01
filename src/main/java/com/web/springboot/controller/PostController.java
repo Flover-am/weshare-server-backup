@@ -1,8 +1,10 @@
 package com.web.springboot.controller;
 
+import com.web.springboot.entity.Post;
 import com.web.springboot.entity.Vo.PostWithComments;
 import com.web.springboot.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,7 +28,10 @@ public class PostController {
     }
 
     @PostMapping("/publish")
-    public String publish() {
-        return "hello";
+    public ResponseEntity<String> publish(@RequestBody Post post) {
+        if (post.getTitle().isEmpty() || post.getContent().isEmpty()) {
+            return ResponseEntity.status(402).body("标题或内容不能为空");
+        }
+        return postService.addPost(post);
     }
 }
