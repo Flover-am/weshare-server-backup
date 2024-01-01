@@ -27,8 +27,8 @@ public class PostController {
     }
 
     @GetMapping("/get_posts/{type}")
-    public ArrayList<PostWithComments> findAll(@PathVariable("type") Integer type) {
-        return postService.getPosts(type);
+    public ResponseEntity<ArrayList<PostWithComments>> findAll(@PathVariable("type") Integer type) {
+        return ResponseEntity.ok(postService.getPosts(type));
     }
 
     @PostMapping("/publish")
