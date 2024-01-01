@@ -27,11 +27,11 @@ public class PostWithCommentsVoConverter {
     /*type = 1,2,3 转换成 技术，资源，闲聊*/
     static String Type(Integer type) {
         switch (type) {
-            case 1:
+            case 0:
                 return "技术";
-            case 2:
+            case 1:
                 return "资源";
-            case 3:
+            case 2:
                 return "闲聊";
             default:
                 return "未知";
