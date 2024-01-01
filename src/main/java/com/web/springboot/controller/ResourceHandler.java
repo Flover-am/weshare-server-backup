@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,12 @@ public class ResourceHandler {
     private UserRepository userRepository;
     @Autowired
     private ResourceRepository resourceRepository;
+
+    @GetMapping("/remove/{id}")
+    public ResponseEntity<String> removeResource(@PathVariable("id") int id) {
+        resourceRepository.deleteById(id);
+        return ResponseEntity.ok("success");
+    }
 
 
     /**
@@ -179,7 +186,7 @@ public class ResourceHandler {
         MultipartFile file = null;
         if (multipartRequest != null) {
             file = multipartRequest.getFile("file");
-        }else {
+        } else {
             logger.info("文件为空");
             return "empty_file";
         }
@@ -267,7 +274,7 @@ public class ResourceHandler {
         Resource target = resourceRepository.findById(resourceId);
         String url = target.getDatapath();
         int index = 0;
-        for (int i = url.length()-1 ; i >= 0 ; --i) {
+        for (int i = url.length() - 1; i >= 0; --i) {
             if (url.charAt(i) == '/') {
                 index = i;
                 break;
@@ -286,7 +293,7 @@ public class ResourceHandler {
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setContentLength((int) file.length());
-        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(url.substring(index+1)));
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(url.substring(index + 1)));
 
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));) {
             byte[] buff = new byte[1024];
