@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface PostDao extends JpaRepository<Post,Integer> {
     //查询type类型的帖子
-    List<Post> findByType(Integer type);
+    List<Post> findByTypeOrderByTimeDesc(Integer type);
 }

@@ -19,6 +19,7 @@ public class PostWithComments {
     private String title;
     private String type;
     private String content;
+    private String time;
     private List<CommentVo> commentsVo;
 
 }

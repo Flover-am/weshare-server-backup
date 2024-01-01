@@ -29,7 +29,7 @@ public class PostService {
 
     // 根据type返回帖子列表
     public ArrayList<PostWithComments> getPosts(Integer type) {
-        List<Post> posts = postDao.findByType(type);
+        List<Post> posts = postDao.findByTypeOrderByTimeDesc(type);
         ArrayList<PostWithComments> res = new ArrayList<>();
         for (Post post :
                 posts) {

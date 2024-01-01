@@ -23,6 +23,7 @@ public class PostWithCommentsVoConverter {
     public PostWithCommentsVoConverter(UserRepository userRepository) {
         PostWithCommentsVoConverter.userRepository = userRepository;
     }
+
     /*type = 1,2,3 转换成 技术，资源，闲聊*/
     static String Type(Integer type) {
         switch (type) {
@@ -47,6 +48,7 @@ public class PostWithCommentsVoConverter {
                 .type(Type(post.getType()))
                 .content(post.getContent())
                 .commentsVo(comments.stream().map(CommentVoConverter::convert).collect(Collectors.toList()))
+                .time(post.getTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
     }
 
