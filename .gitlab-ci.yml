@@ -49,6 +49,6 @@ deploy-job:      # This job runs in the deploy stage.
     - echo "Deploying application..."
     - sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no target/weshare-0.0.2.jar root@$SERVER_IP:~
     - sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no Dockerfile_deploy root@$SERVER_IP:~
-    - sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no root@$SERVER_IP "docker build -f Dockerfile_deploy -t weshare:0.0.2 .;docker stop weshare_deploy;docker rm -f weshare_deploy;docker run --name weshare_deploy -itd -p 997:9090 weshare:0.0.2"
+    - sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no root@$SERVER_IP "docker build -f Dockerfile_deploy -t weshare:0.0.2 .;docker stop weshare_deploy;docker rm -f weshare_deploy;docker run --name weshare_deploy -v /home/ubuntu/code/weshare/file:/home/web/file -itd -p 997:9090 weshare:0.0.2"
     - echo "Application successfully deployed."
 #
