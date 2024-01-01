@@ -45,7 +45,7 @@ public class ResourceHandler {
     @GetMapping("/remove/{id}")
     public ResponseEntity<String> removeResource(@PathVariable("id") int id) {
         resourceService.deleteResource(id);
-        return ResponseEntity.ok("success");
+        return ResponseEntity.status(201).body("success");
     }
 
     @GetMapping("/findMyResource/{username}")
