@@ -16,4 +16,8 @@ public interface ResourceRepository extends JpaRepository<Resource,Integer> {
 
     @Nullable
     List<Resource> findByNameLike(String name);
+
+    //根据uploaderid查找资源
+    @Nullable
+    List<Resource> findByUploaderid(Integer uploaderid);
 }

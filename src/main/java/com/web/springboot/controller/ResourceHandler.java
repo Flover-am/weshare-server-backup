@@ -7,6 +7,7 @@ import com.web.springboot.entity.User;
 import com.web.springboot.repository.CourseRepository;
 import com.web.springboot.repository.ResourceRepository;
 import com.web.springboot.repository.UserRepository;
+import com.web.springboot.service.ResourceService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -38,14 +39,19 @@ public class ResourceHandler {
     private UserRepository userRepository;
     @Autowired
     private ResourceRepository resourceRepository;
+    @Autowired
+    private ResourceService resourceService;
 
     @GetMapping("/remove/{id}")
     public ResponseEntity<String> removeResource(@PathVariable("id") int id) {
-        resourceRepository.deleteById(id);
+        resourceService.deleteResource(id);
         return ResponseEntity.ok("success");
     }
 
-
+    @GetMapping("/findMyResource/{username}")
+    public ResponseEntity<List<Resource>> findMyResource(@PathVariable("username") String  userName) {
+        return ResponseEntity.ok(resourceService.findMyResource(userName));
+    }
     /**
      * //TODO 在本地跑后端，这里要改成自己文件夹
      */
