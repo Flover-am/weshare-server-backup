@@ -25,11 +25,11 @@ public class Comment {
     private Integer authorId;
     private String content;
 
-    private Long postId;
+    private Integer postId;
 
     private LocalDateTime time;
-    private Long commentId;
-    public Comment(Long postId,Integer authorId, String content){
+    private Integer commentId;
+    public Comment(Integer postId,Integer authorId, String content){
         this.authorId=authorId;
         this.content=content;
         this.postId=postId;

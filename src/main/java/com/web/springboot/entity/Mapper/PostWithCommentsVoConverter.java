@@ -7,12 +7,14 @@ import com.web.springboot.entity.Vo.PostWithComments;
 import com.web.springboot.repository.UserRepository;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 // 将Post和List<Comment>转换为PostWithComments
 @Mapper
+@Component
 public class PostWithCommentsVoConverter {
 
     private static UserRepository userRepository;

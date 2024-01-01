@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Post {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String title;
     private Integer type;
