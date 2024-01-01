@@ -26,8 +26,8 @@ public class PostController {
         this.userService = userService;
     }
 
-    @GetMapping("/get_posts")
-    public ArrayList<PostWithComments> findAll(@RequestParam Integer type) {
+    @GetMapping("/get_posts/{type}")
+    public ArrayList<PostWithComments> findAll(@PathVariable("type") Integer type) {
         return postService.getPosts(type);
     }
 
