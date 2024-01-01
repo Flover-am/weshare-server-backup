@@ -18,7 +18,9 @@ public class CourseWithLike {
     private String department;
     private byte[] picture;
     private Boolean isLiked;
-    static public CourseWithLike covert(Course course,Boolean isLiked){
-        return new CourseWithLike(course.getId(),course.getCoursename(),course.getTeachername(),course.getStudytime(),course.getViewtimes(),course.getIntroduction(),course.getDepartment(),course.getPicture(),isLiked);
+    private String pictureUrl;
+
+    static public CourseWithLike covert(Course course, Boolean isLiked) {
+        return new CourseWithLike(course.getId(), course.getCoursename(), course.getTeachername(), course.getStudytime(), course.getViewtimes(), course.getIntroduction(), course.getDepartment(), course.getPicture(), isLiked, course.getPictureUrl());
     }
 }

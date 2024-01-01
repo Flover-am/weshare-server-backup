@@ -25,6 +25,9 @@ public class Course {
     private String department;
     @Column(name = "picture", columnDefinition = "mediumblob")
     private byte[] picture;
+
+    private String pictureUrl;
+
     @ManyToMany
     @JoinTable(name = "likes", joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<User> userList;
